@@ -1,6 +1,6 @@
 # Minecraft Stronghold Locator Fedora (GNOME/Wayland)
 
-Simple script designed for measuring eye angles. It parses `F3+C` coordinates from a file, calculates stronghold intersections using triangulation, and sends persistent, critical D-Bus notifications that bypass "Do Not Disturb" mode.
+Simple script designed for measuring eye angles. It parses `F3+C` coordinates from a clipboard, calculates stronghold intersections using triangulation, and sends persistent, critical D-Bus notifications that bypass "Do Not Disturb" mode.
 
 ## Install Script
 ```bash

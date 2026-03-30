@@ -55,7 +55,6 @@ const pointFailed = (reason) => {
 
 const programStart = () => {
   console.log(`\x1b[36m[START] Speedrun Tool Active\x1b[0m`);
-  createNotification("Locator Active", "Ready for F3+C", 5000);
 };
 
 // --- MATH UTILITIES ---
