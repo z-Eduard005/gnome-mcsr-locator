@@ -13,10 +13,15 @@ create_gnome_shortcut() {
 
   local existing
   existing=$(gsettings get "$schema" custom-keybindings)
-  local updated=$(echo "$existing" | sed "s|]|, '${path}']|" | sed "s|\[, |[|")
+
+  if echo "$existing" | grep -q "'$path'"; then
+    local updated="$existing"
+  else
+    local updated=$(echo "$existing" | sed "s|]|, '${path}']|" | sed "s|\[, |[|")
+  fi
 
   gsettings set "$schema" custom-keybindings "$updated"
-  gsettings set "${schema}.custom-keybinding:${path}" name    "$name"
+  gsettings set "${schema}.custom-keybinding:${path}" name "$name"
   gsettings set "${schema}.custom-keybinding:${path}" command "$command"
   gsettings set "${schema}.custom-keybinding:${path}" binding "$binding"
 }

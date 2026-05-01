@@ -1,4 +1,4 @@
-# Minecraft Stronghold Locator Fedora (GNOME/Wayland)
+# Minecraft Stronghold Locator (GNOME/Wayland)
 
 Simple script designed for measuring eye angles. It parses `F3+C` coordinates from a clipboard, calculates stronghold intersections using triangulation, and sends persistent, critical D-Bus notifications that bypass "Do Not Disturb" mode.
 
