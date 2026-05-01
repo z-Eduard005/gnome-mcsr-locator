@@ -1,3 +1,3 @@
 #!/bin/bash
 wl-paste > "$(dirname "$0")/coords.txt"
-wmctrl -a "Minecraft"
+[ -z "$HYPRLAND_INSTANCE_SIGNATURE" ] || wmctrl -a "Minecraft"
