@@ -28,6 +28,11 @@ create_gnome_shortcut() {
   gsettings set "${schema}.custom-keybinding:${path}" binding "$binding"
 }
 
+if [ "$EUID" -eq 0 ]; then
+  echo "$(err 'Do not run this script with "sudo"!')" >&2
+  exit 1
+fi
+
 [ -z "$1" ] || [ -z "$2" ] && { echo "$(err "Usage: $0 <desktop_entry_name> <minecraft_filename (without '.desktop')>")"; exit 1; }
 
 echo "$(info "Shortcut not found. Installing...")"
