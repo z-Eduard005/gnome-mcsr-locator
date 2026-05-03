@@ -3,8 +3,10 @@ DESKTOP_ENTRY_PATH="$HOME/.local/share/applications"
 START_SCRIPT="$(pwd)/start.sh"
 CB_SCRIPT="$(pwd)/get-last-cb-item.sh"
 
-success() { echo "$(printf '\033[1;32m%s\033[0m' "$*")"; }
-err() { echo "$(printf '\033[1;31m%s\033[0m' "$*")"; }
+success() { printf "\033[1;32m%s\033[0m" "$1"; }
+err() { printf "\033[1;31m%s\033[0m" "$1"; }
+warn() { printf "\033[1;33m%s\033[0m" "$1"; }
+info() { printf "\033[1;34m%s\033[0m" "$1"; }
 
 create_gnome_shortcut() {
   local id="$1" name="$2" command="$3" binding="$4"
@@ -26,18 +28,15 @@ create_gnome_shortcut() {
   gsettings set "${schema}.custom-keybinding:${path}" binding "$binding"
 }
 
-[ -z "$1" ] || [ -z "$2" ] && { err "Usage: $0 <desktop_entry_name> <minecraft_filename (without '.desktop')>"; exit 1; }
+[ -z "$1" ] || [ -z "$2" ] && { echo "$(err "Usage: $0 <desktop_entry_name> <minecraft_filename (without '.desktop')>")"; exit 1; }
 
-SHORTCUT_EXISTS=$(gsettings get org.gnome.settings-daemon.plugins.media-keys custom-keybindings | grep "get-last-cb-item")
-if [ -z "$SHORTCUT_EXISTS" ]; then
-  echo "Shortcut not found. Installing..."
-  create_gnome_shortcut "custom-get-last-cb-item" "get-last-cb-item" "$CB_SCRIPT" "Insert"
-fi
+echo "$(info "Shortcut not found. Installing...")"
+create_gnome_shortcut "get-last-cb-item" "Get Last Clipboard Item" "$CB_SCRIPT" "Insert"
 
-echo "Setting up start script..."
+echo "$(info "Setting up start script...")"
 sed -i "\$ s/\s*[^[:space:]]\+\$/ $2/" "$START_SCRIPT"
 
-echo "Updating desktop entry..."
+echo "$(info "Updating desktop entry...")"
 cat > "$DESKTOP_ENTRY_PATH/$1.desktop" <<EOF
 [Desktop Entry]
 Name=$1
@@ -49,4 +48,4 @@ Categories=Application;
 EOF
 update-desktop-database "$DESKTOP_ENTRY_PATH"
 
-success "All done"
+echo "$(success "MCSR locator successfully installed")"
